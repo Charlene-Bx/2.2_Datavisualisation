@@ -84,25 +84,6 @@ var options = {
          showLabel: false
      }
 };
-<<<<<<< HEAD:2_Graphique_UiToast/index.js
-var options = {
-    theme: 'newTheme'
-}
-
-// For apply theme
-
-var theme = {
-    chart: {
-        fontFamily: 'Verdana',
-        background: {
-            color: 'yellow',
-            opacity: 1
-        }
-    }
-};
-tui.chart.registerTheme('newTheme', theme);
-tui.chart.pieChart(div, data, options);
-=======
 var theme = {
     series: {
         colors: [
@@ -120,4 +101,3 @@ var theme = {
 tui.chart.barChart(container, data, options);
 
 
->>>>>>> c305458d8e93a53d6a5d9e07aaa17d046fba16d0:2_Graphique_TuiToast/index.js
