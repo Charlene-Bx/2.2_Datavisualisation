@@ -1,5 +1,7 @@
 //Creer la <div> qui acceuillera le graphique
+
 let div= document.createElement('div');
+
 div.id='chart-area';    // OU ALORS > div.setAttribute('id','chart-area');
 
 //Placer cette <div> dans le DOM
@@ -20,54 +22,69 @@ dates.forEach(function(a){
     titles.push(a.textContent)
 });
 
-let dataset1= [];
+
+
 
 
 let datasTable= Array.from(table.querySelectorAll("tbody tr"));
-
-
+let data1= []
+let data2= []
+let pays = []
 datasTable.forEach(function(lignes){
-    let objet= {};
+    
+    let x = lignes.querySelector("td").innerText;
+    let y = Array.from(lignes.querySelectorAll("td"));
     
     
-    let cases= lignes.querySelectorAll("td");
-    objet.name= cases[0].textContent;
-    objet.data= cases[1].textContent;
-
-    dataset1.push(objet);
-
+    pays.push(x)
+    data1.push(parseInt(y[1].innerText))
+    data2.push(parseInt(y[2].innerText))
+    
+    
+    
 })
+console.log('data1:', data1)
+
+
+
 
 // GRAPHIQUE
 
+var container = document.getElementById('chart-area');
 var data = {
-    categories: ['Browser'],
-    series: dataset1,
+    categories: pays,
+    series: [
+        {
+            name: titles[0],
+            data: data1
+        },
+        {
+            name: titles [1],
+            data: data2
+        }
+    ]
 };
 var options = {
     chart: {
-        width: 1000,
-        height: 1000,
-        title: titles[0],
-        format: function(value, chartType, areaType, valuetype, legendName) {
-            if (areaType === 'makingSeriesLabel') { // formatting at series area
-                value = value + '%';
-            }
-
-            return value;
-        }
+        width: 1160,
+        height: 650,
+        title: 'Monthly Revenue',
+        format: '1,000'
     },
-    series: {
-        radiusRange: ['40%', '100%'],
-        showLabel: true
+    yAxis: {
+        title: 'pays'
     },
-    tooltip: {
+    xAxis: {
+        title: 'prisonniers',
+        min: 0,
+        max: 350,
         suffix: ''
     },
-    legend: {
-        align: 'bottom'
-    }
+     series: {
+         showLabel: false
+     }
 };
+<<<<<<< HEAD:2_Graphique_UiToast/index.js
 var options = {
     theme: 'newTheme'
 }
@@ -85,3 +102,22 @@ var theme = {
 };
 tui.chart.registerTheme('newTheme', theme);
 tui.chart.pieChart(div, data, options);
+=======
+var theme = {
+    series: {
+        colors: [
+            '#83b14e', '#458a3f', '#295ba0', '#2a4175', '#289399',
+            '#289399', '#617178', '#8a9a9a', '#516f7d', '#dddddd'
+        ]
+    }
+};
+
+// For apply theme
+
+// tui.chart.registerTheme('myTheme', theme);
+// options.theme = 'myTheme';
+
+tui.chart.barChart(container, data, options);
+
+
+>>>>>>> c305458d8e93a53d6a5d9e07aaa17d046fba16d0:2_Graphique_TuiToast/index.js
