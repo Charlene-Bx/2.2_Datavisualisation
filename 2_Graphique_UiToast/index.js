@@ -68,19 +68,20 @@ var options = {
         align: 'bottom'
     }
 };
-var theme = {
-    series: {
-
-        label: {
-            color: '#fff',
-            fontFamily: 'sans-serif'
-        }
-    }
-};
+var options = {
+    theme: 'newTheme'
+}
 
 // For apply theme
 
-tui.chart.registerTheme('myTheme', theme);
-options.theme = 'myTheme';
-
+var theme = {
+    chart: {
+        fontFamily: 'Verdana',
+        background: {
+            color: 'yellow',
+            opacity: 1
+        }
+    }
+};
+tui.chart.registerTheme('newTheme', theme);
 tui.chart.pieChart(div, data, options);

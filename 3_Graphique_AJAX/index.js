@@ -26,8 +26,44 @@ fetch("https://canvasjs.com/services/data/datapoints.php")                      
 setInterval(function(){
 
     fetch(`https://canvasjs.com/services/data/datapoints.php?xstart=${Math.floor(Math.random()*10)}&ystart=${Math.floor(Math.random()*10)}&length=10&type=json`)                            
-    .then(response => response.json()) 
-    .then((data)=>console.log(`data: ${data}`))                                                                       
-    .catch(error => console.log("Erreur : " + error));
+    .then(response=> response.json())                                                //Transformer la reponse de la [promise] en JSON
+    .then(data=> displayData(data))                                                  //Recupere les données de la reponse et lui appliquer la fonction "displayData"                                                                     
+    .catch(error=> console.log("Erreur : " + error));
     
 }, 1000);
+let datasSet=[];
+function displayData(x){
+    x.forEach(element => {
+        data={};
+        axeX=parseInt(element[0]);
+        axeY=parseInt(element[1]);
+        data.x=axeX;
+        data.y=axeY;
+
+        datasSet.push(data)
+    });
+    console.log(`dataSet: ${datasSet}`)
+}
+
+
+
+// var dataPoints = [];
+// $.getJSON("https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=10&type=json", function(data) { 
+
+//     $.each(data, function(key, value){
+//         dataPoints.push({x: value[0], y: parseInt(value[1])});
+//     });
+//     chart = new CanvasJS.Chart("chartContainer",{
+//         title:{
+//             text:"Live Chart with dataPoints from External JSON"
+//         },
+//         data: [{
+//         type: "line",
+//         dataPoints : dataPoints,
+//         }]
+//     });
+//     chart.render();
+//     updateChart();
+// });
+
+
