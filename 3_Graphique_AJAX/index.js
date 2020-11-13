@@ -21,105 +21,49 @@ fetch("https://canvasjs.com/services/data/datapoints.php")                      
 
 //////////////////////////////////////////////// * * * * * * * * * E X O * * * * * * * * ////////////////////////////////////////////////
 
-let graphique1 = document.createElement("div");                                       //Créer la div qui acceuillera le graphique
-graphique1.setAttribute('id', 'chart-area');
+let graphique1 = document.createElement("canvas");                                       //Créer la div qui acceuillera le graphique
+graphique1.id="line-chart";
+graphique1.setAttribute("width","800");
+graphique1.setAttribute("height","450");
+
+
 document.body.appendChild(graphique1);
-function stopdata (){
+
+function stopdata (){                                                                 //Créer une fonction pour arrêter les graphiques
     clearInterval(tutecalme);
 }
 
 
 let tutecalme= setInterval(function(){
 
-    fetch(`https://canvasjs.com/services/data/datapoints.php?xstart=${Math.floor(Math.random()*10)}&ystart=${Math.floor(Math.random()*10)}&length=10&type=json`)                            
+    fetch(`https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=${Math.floor(Math.random()*10)}&length=10&type=json`)                            
     .then(response=> response.json())                                                //Transformer la reponse de la [promise] en JSON
     .then(data=> displayData(data))                                                  //Recupere les données de la reponse et lui appliquer la fonction "displayData"                                                                     
     .catch(error=> console.log("Erreur : " + error));
     
 }, 1000);
-let dataY = [];   
+
+
 function displayData(x){
-    
-   x.forEach(element => {
-        
-        // axeX=parseInt(element[0]);
-        axeY=parseInt(element[1]);
-        dataY.push(axeY)
-        // dataX.push(axeX)
-           
+    let dataY = [];
+    let dataX = [];
+    x.forEach(element => {
+        dataY.push(element[1]);
+        dataX.push(element[0]);
     });
-    console.log('dataY:', dataY)
-       
-}
-
-
-   
-
-
-
-// var dataPoints = [];
-// $.getJSON("https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=10&type=json", function(data) { 
-
-//     $.each(data, function(key, value){
-//         dataPoints.push({x: value[0], y: parseInt(value[1])});
-//     });
-//     chart = new CanvasJS.Chart("chartContainer",{
-//         title:{
-//             text:"Live Chart with dataPoints from External JSON"
-//         },
-//         data: [{
-//         type: "line",
-//         dataPoints : dataPoints,
-//         }]
-//     });
-//     chart.render();
-//     updateChart();
-// });
-
-// Graphique AREA 
-var container = document.getElementById('chart-area');
-var data = {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    series: [
-        {
-            name: 'Seoul',
-            data: dataY
-        }
-       
-    ]
-};
-var options = {
-    chart: {
-        width: 1160,
-        height: 540,
-        title: '24-hr Average Temperature'
-    },
-    series: {
-        zoomable: true,
-        showDot: false,
-        areaOpacity: 1
-    },
-    yAxis: {
-        title: 'Temperature (Celsius)',
-        pointOnColumn: true
-    },
-    xAxis: {
-        title: 'Month'
-    },
-    tooltip: {
-        suffix: '°C'
-    }
-};
-var theme = {
-    series: {
-        colors: [
-            '#83b14e', '#458a3f', '#295ba0', '#2a4175', '#289399',
-            '#289399', '#617178', '#8a9a9a', '#516f7d', '#dddddd'
-        ]
-    }
+    new Chart(graphique1, {
+        type: 'line',
+        data: {
+          labels: dataX,
+          datasets: [{ 
+              data: dataY,
+              borderColor: "#3e95cd",
+              fill: false
+            }
+          ]
+        },
+      });
 };
 
-// For apply theme
-// tui.chart.registerTheme('myTheme', theme);
-// options.theme = 'myTheme';
-tui.chart.areaChart(container, data, options);
+
+  
