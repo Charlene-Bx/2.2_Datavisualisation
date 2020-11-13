@@ -24,7 +24,9 @@ fetch("https://canvasjs.com/services/data/datapoints.php")                      
 let graphique1 = document.createElement("div");
 graphique1.setAttribute('id', 'chart-area');
 document.body.appendChild(graphique1);
-
+function stopdata (){
+    clearInterval(tutecalme);
+}
 
 
 let tutecalme= setInterval(function(){
@@ -35,21 +37,25 @@ let tutecalme= setInterval(function(){
     .catch(error=> console.log("Erreur : " + error));
     
 }, 1000);
-let datasSet=[];
+let dataY = [];   
 function displayData(x){
-    x.forEach(element => {
-        data={};
-        axeX=parseInt(element[0]);
+    
+   x.forEach(element => {
+        
+        // axeX=parseInt(element[0]);
         axeY=parseInt(element[1]);
-        data.x=axeX;
-        data.y=axeY;
-
-        datasSet.push(data)
+        dataY.push(axeY)
+        // dataX.push(axeX)
+           
     });
-    console.log(`dataSet: ${datasSet}`)
+    console.log('dataY:', dataY)
+       
 }
 
-clearInterval(tutecalme);
+
+   
+
+
 
 // var dataPoints = [];
 // $.getJSON("https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=10&type=json", function(data) { 
@@ -70,23 +76,16 @@ clearInterval(tutecalme);
 //     updateChart();
 // });
 
-//Graphique AREA 
+// Graphique AREA 
 var container = document.getElementById('chart-area');
 var data = {
     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     series: [
         {
             name: 'Seoul',
-            data: [20, 40, 25, 50, 15, 45, 33, 34, 20, 30, 22, 13]
-        },
-        {
-            name: 'Sydney',
-            data: [5, 30, 21, 18, 59, 50, 28, 33, 7, 20, 10, 30]
-        },
-        {
-            name: 'Moskva',
-            data: [30, 5, 18, 21, 33, 41, 29, 15, 30, 10, 33, 5]
+            data: dataY
         }
+       
     ]
 };
 var options = {
@@ -119,6 +118,7 @@ var theme = {
         ]
     }
 };
+
 // For apply theme
 // tui.chart.registerTheme('myTheme', theme);
 // options.theme = 'myTheme';
