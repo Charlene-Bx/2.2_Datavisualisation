@@ -21,7 +21,7 @@ fetch("https://canvasjs.com/services/data/datapoints.php")                      
 
 //////////////////////////////////////////////// * * * * * * * * * E X O * * * * * * * * ////////////////////////////////////////////////
 
-let graphique1 = document.createElement("div");
+let graphique1 = document.createElement("div");                                       //Créer la div qui acceuillera le graphique
 graphique1.setAttribute('id', 'chart-area');
 document.body.appendChild(graphique1);
 
@@ -123,5 +123,3 @@ var theme = {
 // tui.chart.registerTheme('myTheme', theme);
 // options.theme = 'myTheme';
 tui.chart.areaChart(container, data, options);
-
-
