@@ -1,20 +1,18 @@
 //Creer la <div> qui acceuillera le graphique
-
 let div= document.createElement('div');
-
 div.id='chart-area';    // OU ALORS > div.setAttribute('id','chart-area');
 
-//Placer cette <div> dans le DOM
-document.body.appendChild(div);
-
 //Trouver l'élément enfant au dessus duquel on placera le graphique
-let table= document.querySelector('table');
+let tableTwo= document.querySelectorAll("table")[1];
+
+//Placer cette <div> dans le DOM
+content.appendChild(div);
 
 //Placer le graphique au dessus du tableau
-document.body.insertBefore(div,table);
+content.insertBefore(div,tableTwo);
 
 //Rechercher les données dans le tableaux html
-let premiereLigneTable= Array.from(table.querySelectorAll("thead th"));
+let premiereLigneTable= Array.from(tableTwo.querySelectorAll("thead th"));
 let dates= premiereLigneTable.slice(2,4);
 let titles= [];
 
@@ -25,8 +23,7 @@ dates.forEach(function(a){
 
 
 
-
-let datasTable= Array.from(table.querySelectorAll("tbody tr"));
+let datasTable= Array.from(tableTwo.querySelectorAll("tbody tr"));
 let data1= []
 let data2= []
 let pays = []
@@ -49,8 +46,6 @@ console.log('data1:', data1)
 
 
 // GRAPHIQUE
-
-var container = document.getElementById('chart-area');
 var data = {
     categories: pays,
     series: [
@@ -66,9 +61,9 @@ var data = {
 };
 var options = {
     chart: {
-        width: 1160,
+        width: 800,
         height: 650,
-        title: 'Monthly Revenue',
+        title: 'Average of Prisonniers',
         format: '1,000'
     },
     yAxis: {
@@ -98,6 +93,6 @@ var theme = {
 // tui.chart.registerTheme('myTheme', theme);
 // options.theme = 'myTheme';
 
-tui.chart.barChart(container, data, options);
+tui.chart.barChart(div, data, options);
 
 

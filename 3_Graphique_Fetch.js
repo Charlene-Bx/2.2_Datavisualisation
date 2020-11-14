@@ -21,20 +21,13 @@ fetch("https://canvasjs.com/services/data/datapoints.php")                      
 
 //////////////////////////////////////////////// * * * * * * * * * E X O * * * * * * * * ////////////////////////////////////////////////
 
+
 let graphique1 = document.createElement("canvas");                                       //Créer la div qui acceuillera le graphique
 graphique1.id="line-chart";
-graphique1.setAttribute("width","800");
-graphique1.setAttribute("height","450");
+content.appendChild(graphique1);
+content.insertBefore(graphique1, tableOne)
 
-
-document.body.appendChild(graphique1);
-
-function stopdata (){                                                                 //Créer une fonction pour arrêter les graphiques
-    clearInterval(tutecalme);
-}
-
-
-let tutecalme= setInterval(function(){
+setInterval(function(){
 
     fetch(`https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=${Math.floor(Math.random()*10)}&length=10&type=json`)                            
     .then(response=> response.json())                                                //Transformer la reponse de la [promise] en JSON
@@ -64,6 +57,3 @@ function displayData(x){
         },
       });
 };
-
-
-  
